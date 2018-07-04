@@ -9,7 +9,5 @@ $.preloadImages(['/img/ajax.gif']);
 
 
 $(function(){
-	$('a[rel=enlarge]').fancybox();
-
 	$('div.popover').prepend('<div class="arrow"></div>');
 });

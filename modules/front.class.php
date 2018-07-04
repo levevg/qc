@@ -16,7 +16,7 @@ function run(){
     $ratingKeyId = SQLSelectVal("SELECT id FROM json_keys WHERE keypath='stats.playerRatings.tdm.rating'");
     $deviationKeyId = SQLSelectVal("SELECT id FROM json_keys WHERE keypath='stats.playerRatings.tdm.deviation'");
     $playersList = SQLSelect("SELECT * FROM players WHERE active=1 AND show_stats LIKE '%elo_tdm%'");
-    $ids = [];    
+    $ids = [];
     foreach ($playersList as $player) {
         $player['ratings'] = [];
         $player['deviations'] = [];

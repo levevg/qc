@@ -4,14 +4,12 @@
     <title>{global var=page_title}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/favicon.ico" />
-    <link href="/combine.php?files=admin.css,js%2Ffancybox%2Ffancybox.css,css%2Fjquery-ui.min.css,css%2Fjquery-ui.structure.min.css,css%2Fjquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+    <link href="/combine.php?files=css%2Fadmin.css" rel="stylesheet" type="text/css" />
     <link rel="icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
     <link rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon" />
-    <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fjquery-ui.min.js,js%2Fscripts_admin.js,js%2Ffancybox%2Ffancybox.js,js%2Ffancybox%2Fmw.js,js%2Fjquery.dragsort.js"></script>
-    <script type="text/javascript" src="/3rdparty/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fscripts_admin.js"></script>
 </head>
 <body>{if $smarty.const.ADMIN_ID==0}{module name=admin_users view_mode=login}{else}
-<script>var ckeUploadPath = '{global var=upload_path}';</script>
 <table style="width:100%; height:100%;">
 <tr style="height:29px">
     <td colspan="2" class="topbar">

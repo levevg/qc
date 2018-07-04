@@ -5,14 +5,13 @@
     <meta name="keywords" content="{global var=meta_keywords}"/>
     <meta name="description" content="{global var=meta_description}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="google-site-verification" content="" />
     <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32"/>
     <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96"/>
     <link rel="icon" type="image/png" href="/img/android-chrome-192x192.png" sizes="192x192"/>
     <link rel="icon" type="image/png" href="/img/favicon-16x16.png" sizes="16x16"/>
     <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#5bbad5"/>
     <link rel="shortcut icon" href="/img/favicon.ico"/>
-    <link href="/combine.php?files=style.css" rel="stylesheet" type="text/css" />
+    <link href="/combine.php?files=css%2Fstyle.css" rel="stylesheet" type="text/css" />
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
