@@ -1,0 +1,20 @@
+[#if FIRST_LOAD="1"#]
+    <link type="text/css" href="<#ROOTHTML#>templates/dateselector/jquery-ui-1.8.custom.css" rel="stylesheet" />    
+    <script type="text/javascript" src="<#ROOTHTML#>templates/dateselector/jquery-ui-1.8.custom.min.js"></script>
+    <script type="text/javascript" src="<#ROOTHTML#>templates/dateselector/jquery.ui.datepicker-ru.js"></script>
+    
+[#endif#]
+
+<script>
+	$(document).ready(function(){
+	    $.datepicker.setDefaults($.datepicker.regional['ru']);
+	    var ddv = $('[#SELECTOR#]').val();
+	    $('[#SELECTOR#]').addClass('dateselector').datepicker({
+	        [#if MIN_DATE!=""#]minDate: '[#MIN_DATE#]',[#endif#]
+	        [#if MAX_DATE!=""#]maxDate: '[#MAX_DATE#]',[#endif#]
+	        constrainInput: true,
+	        showAnim: '',
+	        defaultDate: ddv ? ddv : null
+	    })
+	});
+</script>
