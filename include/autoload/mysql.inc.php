@@ -4,7 +4,7 @@
 	
 	function dbConnect($host, $name, $user, $password){
 		if (isset($dbLink)) return null;
-		$dbLink = mysqli_connect($host, $user, $password);
+		$dbLink = @mysqli_connect($host, $user, $password);
 		if ($dbLink){
 			@mysqli_select_db($dbLink, $name) || fail(array("Couldn't select database `$name`", implode(' ', mysqli_error_list($dbLink))), __FILE__, __LINE__);
 			if (defined('MYSQL_CHARSET'))  mysqli_query($dbLink, "SET NAMES '".MYSQL_CHARSET."'");

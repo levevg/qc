@@ -14,9 +14,12 @@
 
     function loadJsonForNickname($nick, $kind) {
         $path = "https://stats.quake.com/api/v2/Player/$kind?name=".urlencode($nick);
-        $contents = file_get_contents($path);
-        $json = json_decode($contents, true);
-        return $json;
+        $contents = @file_get_contents($path);
+        if ($contents) {
+		return json_decode($contents, true);
+	} else {
+		return [];	
+	}
     }
 
     function flattenJson($json, $prefix = "") {
@@ -190,6 +193,23 @@
         SQLExec("UPDATE players SET last_updated=CURRENT_TIMESTAMP() WHERE id=$player[id]");
     }
 
-    $sql = rtrim($sql, ",\n");
+    SQLExec("DROP VIEW IF EXISTS keypaths");
+    SQLExec("TRUNCATE TABLE games_count");
+    SQLExec("CREATE VIEW keypaths AS SELECT * FROM json_keys WHERE keypath LIKE 'stats.playerProfileStats.champions.%.gameModes.%' AND (keypath LIKE '%.won' OR keypath LIKE '%.lost' OR keypath LIKE '%.tie')");
+    SQLExec("INSERT INTO games_count (player_id, champion, mode, won, lost, tie)
+SELECT s1.player_id,
+       REGEXP_REPLACE(keypath, '.+\\\\.champions\\\\.(.+?)\\\\..+', '\\\\1') AS champion,
+       REGEXP_REPLACE(keypath, '.+\\\\.gameModes\\\\.(.+?)\\\\..+', '\\\\1') AS mode,
+       SUM(IF(keypath LIKE '%.won', COALESCE(s1.num_value, 0), 0)) AS won,
+       SUM(IF(keypath LIKE '%.lost', COALESCE(s1.num_value, 0), 0)) AS lost,
+       SUM(IF(keypath LIKE '%.tie', COALESCE(s1.num_value, 0), 0)) AS tie
+FROM stats s1
+    JOIN (SELECT MAX(time) AS maxtime, player_id, keypath_id FROM stats WHERE keypath_id IN (SELECT id FROM keypaths) GROUP BY player_id, keypath_id) s2
+        ON (s1.player_id = s2.player_id AND s1.keypath_id=s2.keypath_id AND s1.time = s2.maxtime)
+    JOIN json_keys ON (json_keys.id = s1.keypath_id)
+GROUP BY s1.player_id, champion, mode
+HAVING mode IN ('DUEL', 'FFA', 'INSTAGIB', 'SACRIFICE', 'TDM', 'TDM_2VS2')");
+
+    SQLExec("DROP VIEW keypaths");
 
     dbDisconnect();

@@ -49,6 +49,32 @@ ORDER BY y DESC");
         $map['name'] = ucwords(str_replace('_', ' ', $map['name']));
     }
 
+    $gamescount = SQLSelect("
+SELECT players.nickname, player_id, mode, SUM(won+lost+tie) AS games
+FROM games_count JOIN players ON (games_count.player_id = players.id)
+WHERE players.show_stats LIKE '%gamecount%'
+GROUP BY mode, player_id");
+
+    $p = [];
+    $g = [];
+    foreach ($gamescount as $gc) {
+        $p[$gc['player_id']] = $gc['nickname'];
+        $g[$gc['player_id'].$gc['mode']] = $gc['games'];
+    }
+    $out['gamescountPlayers'] = array_values($p);
+
+    $gametypes = array('DUEL' => 'Duel', 'FFA' => 'FFA', 'INSTAGIB' => 'Instagib', 'SACRIFICE' => 'Sacrifice', 'TDM' => 'TDM', 'TDM_2VS2' => '2v2');
+    
+    $out['gamescount'] = [];
+
+    foreach ($gametypes as $key => $name) {
+        $data = [];
+        foreach ($p as $id => $pl) {
+            $data[] = $g[$id.$key];
+        }
+        $out['gamescount'][] = array('name' => $name, 'data' => $data);
+    }
+
     $this->template = 'index.tpl';
     $this->data = $out;
 }

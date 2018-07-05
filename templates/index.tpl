@@ -17,9 +17,11 @@
 </head>
 <body>
 <div style="width:50%;float:left">
-{foreach from=$players item=player}<div id="tdm_elo_{$player.id}" class="chart"></div>{/foreach}
-</div><div style="width:50%;float:left">
+    <div id="gamescount" class="chart"></div>
     <div id="pop_maps" class="chart"></div>
+</div>
+<div style="width:50%;float:left">
+{foreach from=$players item=player}<div id="tdm_elo_{$player.id}" class="chart"></div>{/foreach}
 </div>
 <script>
     Highcharts.chart('pop_maps', {
@@ -44,6 +46,40 @@
         name: 'Игр',
         data: {$maps|json_encode:32},
     }]
+});
+
+Highcharts.chart('gamescount', {
+    chart: { type: 'column' },
+    title: { text: 'Сыграно матчей' },
+    xAxis: {
+        categories: {$gamescountPlayers|json_encode:32}
+    },
+    yAxis: {
+        min: 0,
+        title: { enabled: false },
+        stackLabels: {
+            enabled: true,
+        }
+    },
+    legend: {
+        align: 'right',
+        verticalAlign: 'top',
+        x: -30,
+        y: 25,
+        floating: true,
+        backgroundColor: '#333',
+    },
+    tooltip: {
+        headerFormat: '{ldelim}point.x}<br/>',
+        pointFormat: '{ldelim}series.name}: {ldelim}point.y}<br/>',
+        shared: true,
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+        }
+    },
+    series: {$gamescount|json_encode:32}
 });
 
 </script>
