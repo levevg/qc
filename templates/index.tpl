@@ -2,8 +2,6 @@
 <html>
 <head>
     <title>{global var=page_title}</title>
-    <meta name="keywords" content="{global var=meta_keywords}"/>
-    <meta name="description" content="{global var=meta_description}"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="icon" type="image/png" href="/img/favicon-32x32.png" sizes="32x32"/>
     <link rel="icon" type="image/png" href="/img/favicon-96x96.png" sizes="96x96"/>
@@ -24,36 +22,7 @@
     <div id="pop_maps" class="chart"></div>
 </div>
 <script>
-var ratingPlotBands = [
-                { from: 600, to: 675, color: 'rgba(255, 150, 0, 0.05)', },
-                { from: 675, to: 750, color: 'rgba(255, 150, 0, 0.09)', },
-                { from: 750, to: 825, color: 'rgba(255, 150, 0, 0.13)', },
-                { from: 825, to: 900, color: 'rgba(255, 150, 0, 0.17)', },
-                { from: 900, to: 975, color: 'rgba(255, 150, 0, 0.21)', },
-
-                { from: 975, to: 1050, color: 'rgba(255, 255, 255, 0.05)', },
-                { from: 1050, to: 1125, color: 'rgba(255, 255, 255, 0.09)', },
-                { from: 1125, to: 1200, color: 'rgba(255, 255, 255, 0.13)', },
-                { from: 1200, to: 1275, color: 'rgba(255, 255, 255, 0.17)', },
-                { from: 1275, to: 1350, color: 'rgba(255, 255, 255, 0.21)', },
-
-                { from: 1350, to: 1425, color: 'rgba(255, 220, 80, 0.05)', },
-                { from: 1425, to: 1500, color: 'rgba(255, 220, 80, 0.09)', },
-                { from: 1500, to: 1575, color: 'rgba(255, 220, 80, 0.13)', },
-                { from: 1575, to: 1650, color: 'rgba(255, 220, 80, 0.17)', },
-                { from: 1650, to: 1725, color: 'rgba(255, 220, 80, 0.21)', },
-
-                { from: 1725, to: 1800, color: 'rgba(100, 200, 255, 0.05)', },
-                { from: 1800, to: 1875, color: 'rgba(100, 200, 255, 0.09)', },
-                { from: 1875, to: 1950, color: 'rgba(100, 200, 255, 0.13)', },
-                { from: 1950, to: 2025, color: 'rgba(100, 200, 255, 0.17)', },
-                { from: 2025, to: 2100, color: 'rgba(100, 200, 255, 0.21)', },
-
-                { from: 2100, to: 2175, color: 'rgba(255, 100, 255, 0.10)', },
-            ];
-
-
-Highcharts.chart('pop_maps', {
+    Highcharts.chart('pop_maps', {
     chart: { type: 'pie' },
     title: {
         text: 'Карты по популярности'
@@ -63,9 +32,11 @@ Highcharts.chart('pop_maps', {
     },
     plotOptions: {
         pie: {
+            borderColor: '#333',
             dataLabels: {
                 enabled: true,
                 format: '<b>{ldelim}point.name}</b>: {ldelim}point.percentage:.0f}%',
+                style: { fontSize: '13px', },
             }
         }
     },
@@ -79,7 +50,7 @@ Highcharts.chart('pop_maps', {
 {foreach from=$players item=player}
 <script>
     Highcharts.chart('tdm_elo_{$player.id}', {
-        title: { text: '{$player.nickname} 2x2 Elo' },
+        title: { text: '{$player.nickname}' },
         xAxis: { type: 'datetime' },
         yAxis: {
             title: { text: null },
@@ -87,25 +58,46 @@ Highcharts.chart('pop_maps', {
             softMax: 2500,
             gridLineWidth: 0,
             plotBands: ratingPlotBands,
+            plotLines: ratingPlotLines,
         },
         tooltip: { crosshairs: true, shared: true, },
         legend: { enabled: false },
-        series: [{
+        series: [
+        {
             name: 'Рейтинг в 2х2',
-            data: {$player.ratings|json_encode},
+            data: {$player.tdmRatings|json_encode},
             zIndex: 1,
             marker: { lineWidth: 1 }
         }, {
             name: 'С вероятностью 68% между',
-            data: {$player.deviations|json_encode},
+            data: {$player.tdmDeviations|json_encode},
             type: 'arearange',
-            lineWidth: 0,
+            lineWidth: 1,
+            dashStyle: 'Dot',
             linkedTo: ':previous',
             color: Highcharts.getOptions().colors[0],
-            fillOpacity: 0.3,
+            fillOpacity: 0.05,
             zIndex: 0,
             marker: {  enabled: false  }
-        }]
+        },
+        {
+            name: 'Рейтинг в дуэлях',
+            data: {$player.duelRatings|json_encode},
+            zIndex: 1,
+            marker: { lineWidth: 1 }
+        }, {
+            name: 'С вероятностью 68% между',
+            data: {$player.duelDeviations|json_encode},
+            type: 'arearange',
+            lineWidth: 1,
+            dashStyle: 'Dot',
+            linkedTo: ':previous',
+            color: Highcharts.getOptions().colors[1],
+            fillOpacity: 0.05,
+            zIndex: 0,
+            marker: {  enabled: false  }
+        },
+        ]
     });
 </script>
 {/foreach}

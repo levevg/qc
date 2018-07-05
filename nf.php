@@ -1,4 +1,4 @@
-<?
+<?php
 
 
 if (preg_match('/u(\d+)_c(\d+)_t(\d+)\.xhtml/', $_SERVER["REQUEST_URI"], $m)) {
