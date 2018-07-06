@@ -3,9 +3,11 @@
     $out['title'] = array('duel' => 'Дуэльный рейтинг', 'tdm' => 'Рейтинг в 2v2')[$gametype];
 
     $players = chart::playersRating($gametype);
-    $minTime = 2000000000000;
     $maxTime = time() * 1000;
     foreach ($players as $i => $player) {
-        if (count($player['rating'])) $minTime = min($minTime, $player['rating'][0][0]);
+        if (count($player['ratings'])) {
+            $players[$i]['ratings'] = chart::chopTimeSeries($player['ratings'], $player['ratings'][0][0], $maxTime);
+        }
     }
-    $out['players'] = chart::chopTimeSeries($players, $minTime, $maxTime);
+
+    $out['players'] = $players;
