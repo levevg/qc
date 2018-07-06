@@ -6,10 +6,8 @@
 
     $minTimeTdm = $tdm ? min($tdm['ratings'][0][0], $tdm['deviations'][0][0]) : null;
     $minTimeDuel = $duel ? min($duel['ratings'][0][0], $duel['deviations'][0][0]) : null;
-    $maxTimeTdm = $tdm ? max(end($tdm['ratings'])[0], end($tdm['deviations'])[0]) : null;
-    $maxTimeDuel = $duel ? max(end($duel['ratings'])[0], end($duel['deviations'])[0]) : null;
-
-    echo "[$minTimeTdm, $maxTimeTdm] [$maxTimeTdm, $maxTimeDuel]<br/>";
+    $maxTimeTdm = time() * 1000; //$tdm ? max(end($tdm['ratings'])[0], end($tdm['deviations'])[0]) : null;
+    $maxTimeDuel = time() * 1000; //$duel ? max(end($duel['ratings'])[0], end($duel['deviations'])[0]) : null;
 
     $chopFrom = 0;
     $chopTo = 0;

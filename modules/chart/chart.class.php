@@ -86,7 +86,23 @@ static function playersRating($gametype) {
 }
 
 static function chopTimeSeries($series, $from_time, $to_time, $by = 3600000) {
-    return $series;
+    if (!count($series) || $from_time > $to_time) return [];
+
+    $from_time = round($from_time / $by) * $by;
+    $to_time = round($to_time / $by) * $by;
+    foreach ($series as $i => $s) {
+        $s[0] = round($s[0] / $by) * $by;
+        $series[$i] = $s;
+    }
+    $result = [];
+    $last = null;
+    for ($time = $from_time; $time <= $to_time; $time += $by) {
+        while (count($series) && $series[0][0] <= $time) {
+            $last = array_shift($series);
+        }
+        $result[] = $last;
+    }
+    return $result;
 }
 
 function run(){
