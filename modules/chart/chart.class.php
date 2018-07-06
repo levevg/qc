@@ -100,6 +100,7 @@ static function chopTimeSeries($series, $from_time, $to_time, $by = 3600000) {
         while (count($series) && $series[0][0] <= $time) {
             $last = array_shift($series);
         }
+        $last[0] = $time;
         $result[] = $last;
     }
     return $result;
