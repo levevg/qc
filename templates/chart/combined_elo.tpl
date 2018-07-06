@@ -19,13 +19,17 @@
             floating: true,
             backgroundColor: '#333',
         },
+        plotOptions: {
+            series: {
+                marker: { enabled: false, states: { hover: { enabled: false } } },
+            }
+        },
         series: [
             {foreach from=$players item=player}
             {
                 name: '{$player.nickname}',
                 data: {$player.ratings|json_encode},
                 zIndex: 1,
-                marker: { enabled: false }
             },
             {/foreach}
         ]
