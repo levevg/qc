@@ -56,7 +56,8 @@ static function playersRating($gametype) {
     foreach ($deviations as $deviation) {
         $players[$deviation['player_id']]['deviations'][] = $deviation;
     }
-    foreach ($players as &$player) {
+
+    /*foreach ($players as &$player) {
         $timeline = array();
         foreach ($player['ratings'] as $rating) {
             $timeline[$rating['x']]['r'] = $rating['y'];
@@ -78,10 +79,14 @@ static function playersRating($gametype) {
             if ($p['r']) $player['ratings'][] = array($time * 1000, (int)$p['r']);
             if ($p['r'] && $p['d']) $player['deviations'][] = array($time * 1000, $p['r'] - $p['d'], $p['r'] + $p['d']);
         }
-    }
+    }*/
 
     $cache[$gametype] = $players;
     return $players;
+}
+
+static function chopTimeSeries($series, $from_time, $to_time, $by = 3600000) {
+    return $series;
 }
 
 function run(){
@@ -123,8 +128,7 @@ function player_elos(&$out) {
 }
 
 function combined_elo(&$out, $gametype) {
-    $out['title'] = array('duel' => 'Дуэльный рейтинг', 'tdm' => 'Рейтинг в 2v2')[$gametype];
-    $out['players'] = chart::playersRating($gametype);
+    require 'combined_elo.inc.php';
 }
 
 }

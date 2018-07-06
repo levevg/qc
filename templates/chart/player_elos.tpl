@@ -18,7 +18,7 @@
                 name: 'Рейтинг в 2х2',
                 data: {$player.tdmRatings|json_encode},
                 zIndex: 1,
-                marker: { lineWidth: 1 }
+                marker: { enabled: false }
             }, {
                 name: 'С вероятностью 68% между',
                 data: {$player.tdmDeviations|json_encode},
@@ -29,13 +29,13 @@
                 color: Highcharts.getOptions().colors[0],
                 fillOpacity: 0.05,
                 zIndex: 0,
-                marker: {  enabled: false  }
+                marker: { enabled: false }
             },
             {
                 name: 'Рейтинг в дуэлях',
                 data: {$player.duelRatings|json_encode},
                 zIndex: 1,
-                marker: { lineWidth: 1 }
+                marker: { enabled: false }
             }, {
                 name: 'С вероятностью 68% между',
                 data: {$player.duelDeviations|json_encode},
@@ -46,7 +46,7 @@
                 color: Highcharts.getOptions().colors[1],
                 fillOpacity: 0.05,
                 zIndex: 0,
-                marker: {  enabled: false  }
+                marker: { enabled: false }
             },
         ]
     };
