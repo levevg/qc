@@ -43,4 +43,4 @@
 
     endMeasure('TOTAL');
     
-    //performanceReport();
+    performanceReport();

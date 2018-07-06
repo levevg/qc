@@ -5,7 +5,7 @@ Highcharts.createElement('link', {
 }, null, document.getElementsByTagName('head')[0]);
 
 Highcharts.theme = {
-    colors: ['#00b3b0', '#ffec87', '#4aacd4', '#cecdc9', '#eeaaee', '#c97a54', '#78cf7c', '#fc9696', '#6e67c9', '#d1c5af', '#adb1c5'],
+    colors: ['#00b3b0', '#ffec87', '#4aacd4', '#cecdc9', '#eeaaee', '#c97a54', '#78cf7c', '#fc9696', '#6e67c9', '#d1c5af', '#adb1c5', '#c8d071'],
     chart: {
         backgroundColor: {
             linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
