@@ -57,7 +57,7 @@ static function playersRating($gametype) {
         $players[$deviation['player_id']]['deviations'][] = $deviation;
     }
 
-    /*foreach ($players as &$player) {
+    foreach ($players as &$player) {
         $timeline = array();
         foreach ($player['ratings'] as $rating) {
             $timeline[$rating['x']]['r'] = $rating['y'];
@@ -79,7 +79,7 @@ static function playersRating($gametype) {
             if ($p['r']) $player['ratings'][] = array($time * 1000, (int)$p['r']);
             if ($p['r'] && $p['d']) $player['deviations'][] = array($time * 1000, $p['r'] - $p['d'], $p['r'] + $p['d']);
         }
-    }*/
+    }
 
     $cache[$gametype] = $players;
     return $players;
