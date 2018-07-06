@@ -4,13 +4,13 @@
     $tdm = chart::playersRating('tdm')[$this->id];
     $duel = chart::playersRating('duel')[$this->id];
 
-    $minTimeTdm = $tdm ? min($tdm['ratings'][0][0], $tdm['deviations'][0][0]) : null;
-    $minTimeDuel = $duel ? min($duel['ratings'][0][0], $duel['deviations'][0][0]) : null;
+    $minTimeTdm = $tdm ? min($tdm['ratings'][0][0], $tdm['deviations'][0][0]) : 2000000000000;
+    $minTimeDuel = $duel ? min($duel['ratings'][0][0], $duel['deviations'][0][0]) : 2000000000000;
     $maxTimeTdm = time() * 1000; //$tdm ? max(end($tdm['ratings'])[0], end($tdm['deviations'])[0]) : null;
     $maxTimeDuel = time() * 1000; //$duel ? max(end($duel['ratings'])[0], end($duel['deviations'])[0]) : null;
 
-    $chopFrom = 0;
-    $chopTo = 0;
+    $chopFrom = min($minTimeDuel, $minTimeTdm);
+    $chopTo = max($maxTimeDuel, $maxTimeTdm);
 
     if ($tdm) {
         $player = $tdm;
