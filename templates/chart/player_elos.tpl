@@ -5,8 +5,8 @@
         xAxis: { type: 'datetime' },
         yAxis: {
             title: { text: null },
-            softMin: 0,
-            softMax: 2500,
+            softMin: 500,
+            softMax: 2000,
             gridLineWidth: 0,
             plotBands: ratingPlotBands,
             plotLines: ratingPlotLines,
