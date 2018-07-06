@@ -18,7 +18,7 @@
 <body>
 <div style="width:50%;float:left">
     <div id="gamescount" class="chart"></div>
-    <div id="pop_maps" class="chart"></div>
+    {module name=chart mode=matches_by_map}
 </div>
 <div style="width:50%;float:left">
 {foreach from=$players item=player}<div id="tdm_elo_{$player.id}" class="chart"></div>{/foreach}
