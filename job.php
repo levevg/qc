@@ -192,7 +192,7 @@
         if (count($newRows)) SQLExec($sql);
         SQLExec("UPDATE players SET last_updated=CURRENT_TIMESTAMP() WHERE id=$player[id]");
     }
-/*
+
     echo "Updating matches count\n";
     SQLExec("DROP VIEW IF EXISTS keypaths");
     SQLExec("TRUNCATE TABLE games_count");
@@ -211,10 +211,9 @@ FROM stats s1
 GROUP BY s1.player_id, champion, mode
 HAVING mode IN ('DUEL', 'FFA', 'INSTAGIB', 'SACRIFICE', 'TDM', 'TDM_2VS2')");
     SQLExec("DROP VIEW keypaths");
-*/
 
-    $duelUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='duel' ORDER BY last_updated, RAND() ASC LIMIT 10");
-    $tdmUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='tdm' ORDER BY last_updated, RAND() ASC LIMIT 10");
+    $duelUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='duel' ORDER BY last_updated, RAND() ASC LIMIT 1");
+    $tdmUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='tdm' ORDER BY last_updated, RAND() ASC LIMIT 1");
     $rangesToUpdate = array_merge($duelUpdateRange, $tdmUpdateRange);
     foreach ($rangesToUpdate as $range) {
         $from = $range[range_from];
