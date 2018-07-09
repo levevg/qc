@@ -109,3 +109,12 @@
 		}
 		return mysqli_insert_id($dbLink);
 	}
+
+	function SQLSelectAssoc($query, $key) {
+	    $rows = SQLSelect($query);
+	    $result = [];
+	    foreach ($rows as $row) {
+	        $result[$row[$key]] = $row;
+        }
+        return $result;
+    }

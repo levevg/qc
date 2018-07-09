@@ -16,13 +16,16 @@
     <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fscripts.js"></script>
 </head>
 <body>
-<div style="width:50%;float:left">
+<div style="width:33%;float:left">
     {module name=chart mode=matches_by_player}
     {module name=chart mode=matches_by_map}
+    {module name=chart mode=elo_distribution}
+</div>
+<div style="width:33%;float:left">
     {module name=chart mode=combined_elo gametype=tdm}
     {module name=chart mode=combined_elo gametype=duel}
 </div>
-<div style="width:50%;float:left">
+<div style="width:34%;float:left">
     {module name=chart mode=all_players_list_elos}
 </div>
 </body>

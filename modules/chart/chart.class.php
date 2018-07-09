@@ -126,6 +126,9 @@ function run(){
         case 'combined_elo':
             $this->combined_elo($out, $this->gametype);
             break;
+        case 'elo_distribution':
+            $this->elo_distribution($out);
+            break;
         case 'all_players_list_elos':
             $out['players'] = SQLSelect("SELECT * FROM players WHERE show_stats LIKE '%rating%'");
             break;
@@ -144,6 +147,10 @@ function matches_by_player(&$out) {
 
 function player_elos(&$out) {
     require 'player_elos.inc.php';
+}
+
+function elo_distribution(&$out) {
+    require 'elo_distribution.inc.php';
 }
 
 function combined_elo(&$out, $gametype) {

@@ -19,3 +19,7 @@
         {module name=chart mode=player_elos id=$player.id}
     {/foreach}
 {/if}
+
+{if $mode == "elo_distribution"}
+    {inc file="elo_distribution.tpl"}
+{/if}

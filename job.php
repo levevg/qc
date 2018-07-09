@@ -16,10 +16,10 @@
         $path = "https://stats.quake.com/api/v2/Player/$kind?name=".urlencode($nick);
         $contents = @file_get_contents($path);
         if ($contents) {
-		return json_decode($contents, true);
-	} else {
-		return [];	
-	}
+            return json_decode($contents, true);
+        } else {
+            return [];
+        }
     }
 
     function flattenJson($json, $prefix = "") {
@@ -164,7 +164,7 @@
                         );
 
     foreach ($players as $player) {
-        echo $player["nickname"]."\n";
+        echo "Updating stats of $player[nickname]\n";
         $json = loadStatsForNickname($player["nickname"]);
         $flat = flattenJson($json);
         $stats = lastestStatsForPlayerId($player["id"]);
@@ -192,7 +192,8 @@
         if (count($newRows)) SQLExec($sql);
         SQLExec("UPDATE players SET last_updated=CURRENT_TIMESTAMP() WHERE id=$player[id]");
     }
-
+/*
+    echo "Updating matches count\n";
     SQLExec("DROP VIEW IF EXISTS keypaths");
     SQLExec("TRUNCATE TABLE games_count");
     SQLExec("CREATE VIEW keypaths AS SELECT * FROM json_keys WHERE keypath LIKE 'stats.playerProfileStats.champions.%.gameModes.%' AND (keypath LIKE '%.won' OR keypath LIKE '%.lost' OR keypath LIKE '%.tie')");
@@ -209,7 +210,26 @@ FROM stats s1
     JOIN json_keys ON (json_keys.id = s1.keypath_id)
 GROUP BY s1.player_id, champion, mode
 HAVING mode IN ('DUEL', 'FFA', 'INSTAGIB', 'SACRIFICE', 'TDM', 'TDM_2VS2')");
-
     SQLExec("DROP VIEW keypaths");
+*/
+
+    $duelUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='duel' ORDER BY last_updated, RAND() ASC LIMIT 10");
+    $tdmUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='tdm' ORDER BY last_updated, RAND() ASC LIMIT 10");
+    $rangesToUpdate = array_merge($duelUpdateRange, $tdmUpdateRange);
+    foreach ($rangesToUpdate as $range) {
+        $from = $range[range_from];
+        echo "Updating $range[gametype] leaderboard range $range[range_from]-".($from+99)."\n";
+        $path = "https://stats.quake.com/api/v2/Leaderboard?board=$range[gametype]&from=$from";
+        $json = @json_decode(file_get_contents($path), true);
+        $entries = $json['entries'];
+        SQLExec("DELETE FROM leaderboard WHERE gametype='$range[gametype]' AND idx BETWEEN $from AND ".($from+count($entries)-1));
+        $values = [];
+        foreach ($entries as $i => $player) {
+            $values[] = "(\"".mes($player['userName'])."\", $player[eloRating], ".($i + $from).", \"$range[gametype]\")";
+        }
+        $sql = "INSERT INTO leaderboard (nickname, rating, idx, gametype) VALUES \n".implode(",\n", $values);
+        SQLExec($sql);
+        SQLExec("UPDATE leaderboard_ranges SET last_updated=CURRENT_TIMESTAMP() WHERE id=".$range['id']);
+    }
 
     dbDisconnect();
