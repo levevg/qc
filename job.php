@@ -194,6 +194,7 @@
         if (count($newRows)) SQLExec($sql);
         SQLExec("UPDATE players SET last_updated=CURRENT_TIMESTAMP() WHERE id=$player[id]");
     }
+    SQLExec("UPDATE stats SET time=CURRENT_TIMESTAMP() WHERE revision='$revision'");
 
     echo "Updating matches history\n";
     $lastMatchTime = SQLSelectAssoc("SELECT MAX(time) AS lastMatch, player_id FROM `player_matches` GROUP BY player_id", 'player_id');
