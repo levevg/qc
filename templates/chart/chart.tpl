@@ -23,3 +23,7 @@
 {if $mode == "elo_distribution"}
     {inc file="elo_distribution.tpl"}
 {/if}
+
+{if $mode == "players_matches"}
+    {inc file="players_matches.tpl"}
+{/if}

@@ -13,6 +13,7 @@
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fscripts.js"></script>
 </head>
 <body>
@@ -22,6 +23,7 @@
     {module name=chart mode=elo_distribution}
 </div>
 <div style="width:33%;float:left">
+    {module name=chart mode=players_matches}
     {module name=chart mode=combined_elo gametype=tdm}
     {module name=chart mode=combined_elo gametype=duel}
 </div>

@@ -197,10 +197,9 @@
     SQLExec("UPDATE stats SET time=CURRENT_TIMESTAMP() WHERE revision='$revision'");
 
     echo "Updating matches history\n";
-    $lastMatchTime = SQLSelectAssoc("SELECT MAX(time) AS lastMatch, player_id FROM `player_matches` GROUP BY player_id", 'player_id');
     SQLExec("DROP VIEW IF EXISTS keypaths");
-    SQLExec("CREATE VIEW keypaths AS SELECT k1.id AS playedTimeKeypathId, k2.id AS matchUidKeypathId FROM json_keys k1 JOIN json_keys k2 ON (REPLACE(k1.keypath, 'playedDateTime', 'id')=k2.keypath) WHERE k1.keypath LIKE 'stats.matches.%.playedDateTime'");
-    SQLExec("INSERT INTO player_matches (player_id, time, match_uid) SELECT DISTINCT s1.player_id, FROM_UNIXTIME(s1.time_value), other_values.value FROM stats s1 JOIN stats s2 JOIN keypaths JOIN other_values ON (s1.keypath_id=playedTimeKeypathId AND s2.keypath_id=matchUidKeypathId AND s1.player_id=s2.player_id AND s1.revision=s2.revision AND s2.other_value=other_values.id) WHERE FROM_UNIXTIME(s1.time_value)>COALESCE((SELECT MAX(time) FROM player_matches WHERE player_matches.player_id=s1.player_id), 0);");
+    SQLExec("CREATE VIEW keypaths AS SELECT k1.id AS playedTimeKeypathId, k2.id AS matchUidKeypathId FROM json_keys k1 JOIN json_keys k2 ON (REPLACE(k1.keypath, '.time', '.id')=k2.keypath) WHERE k1.keypath LIKE 'games.matches.%.time'");
+    SQLExec("INSERT INTO player_matches (player_id, time, match_uid) SELECT DISTINCT s1.player_id, FROM_UNIXTIME(s1.time_value), other_values.value FROM stats s1 JOIN stats s2 JOIN keypaths JOIN other_values ON (s1.keypath_id=playedTimeKeypathId AND s2.keypath_id=matchUidKeypathId AND s1.player_id=s2.player_id AND s1.revision=s2.revision AND s2.other_value=other_values.id) WHERE FROM_UNIXTIME(s1.time_value)>COALESCE((SELECT MAX(time) FROM player_matches WHERE player_matches.player_id=s1.player_id), '2001-01-01');");
 
     echo "Updating matches count\n";
     SQLExec("DROP VIEW IF EXISTS keypaths");

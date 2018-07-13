@@ -32,7 +32,7 @@ function performanceReport($hidden=1) {
 	    $tmp[] = $rs;
     }
     echo implode("\n", $tmp);
-    echo "Peak memory usage: ".round(memory_get_peak_usage()/1024/1024,1)."M\n";
+    echo "\nPeak memory usage: ".round(memory_get_peak_usage()/1024/1024,1)."M\n";
     echo "\n END PERFORMANCE REPORT -->";
 }
 

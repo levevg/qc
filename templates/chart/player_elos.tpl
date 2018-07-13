@@ -12,7 +12,13 @@
             plotLines: ratingPlotLines,
         },
         tooltip: { crosshairs: true, shared: true, },
-        legend: { enabled: false },
+        legend: {
+            align: 'right',
+            verticalAlign: 'top',
+            x: -30, y: 25,
+            floating: true,
+            backgroundColor: '#333',
+        },
         plotOptions: {
             series: {
                 marker: { enabled: false, states: { hover: { enabled: false } } },
