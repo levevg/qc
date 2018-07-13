@@ -10,7 +10,7 @@
                     (SELECT j1.id AS keyMatchId, j2.id AS keyMatchMap
                     FROM json_keys j1 JOIN json_keys j2 ON (REPLACE(j1.keypath, '.id', '.mapName') = j2.keypath)
                     WHERE j1.keypath LIKE 'games.matches.%.id') k
-                ON s1.keypath_id = k.keyMatchId AND s1.time=s2.time AND s2.keypath_id = k.keyMatchMap
+                ON s1.keypath_id = k.keyMatchId AND s1.revision=s2.revision AND s2.keypath_id = k.keyMatchMap AND s1.player_id=s2.player_id
                 GROUP BY matchIdValue, matchMapValue) m
             ON o1.id = matchIdValue AND o2.id = matchMapValue
             GROUP BY o2.value
