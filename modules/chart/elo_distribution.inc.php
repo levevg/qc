@@ -1,7 +1,7 @@
 <?php
 
     $width = 75;
-    $elite = 2100;
+    $elite = 2200;
     $group = "FLOOR(rating/$width)*$width";
     $min = SQLSelectVal("SELECT MIN($group) FROM leaderboard");
     $max = SQLSelectVal("SELECT MAX($group) FROM leaderboard");
