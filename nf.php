@@ -1,21 +1,5 @@
 <?php
 
-
-if (preg_match('/u(\d+)_c(\d+)_t(\d+)\.xhtml/', $_SERVER["REQUEST_URI"], $m)) {
-    $_GET['u'] = $m[1];
-    $_GET['c'] = $m[2];
-    $_GET['t'] = $m[3];
-    chdir('secret');
-    include 'secret/index.php';
-    die;
-}
-
-if (preg_match('/start\.xhtml/', $_SERVER["REQUEST_URI"], $m)) {
-    chdir('secret');
-    include 'secret/index.php';
-    die;
-}
-
 include_once("./config.php");
 include_once("./include/errors.php");
 include_once("./include/autoload.php");
@@ -47,7 +31,7 @@ foreach($pages as $page){
 }
 
 if (!isset($GLOBALS['modules_params'])){
-	$page = SQLSelectOne("SELECT * FROM structure WHERE '".mysql_real_escape_string($_SERVER["REQUEST_URI"])."' LIKE link");
+	$page = SQLSelectOne("SELECT * FROM structure WHERE '".mes($_SERVER["REQUEST_URI"])."' LIKE link");
 	if ($page['id']){
 		$GLOBALS['modules_params'] = json_decode($page['params'], true);
 	}

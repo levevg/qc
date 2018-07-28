@@ -24,6 +24,10 @@
     {inc file="elo_distribution.tpl"}
 {/if}
 
+{if $mode == "elo_old_vs_new"}
+    {inc file="elo_old_vs_new.tpl"}
+{/if}
+
 {if $mode == "players_matches"}
     {inc file="players_matches.tpl"}
 {/if}

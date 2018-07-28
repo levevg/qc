@@ -15,8 +15,19 @@
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
     <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fscripts.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122950678-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){ dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-122950678-1');
+    </script>
 </head>
 <body>
+{if $action == "elo"}
+    {module name=chart mode=elo_old_vs_new}
+{else}
 <div style="width:33%;float:left">
     {module name=chart mode=matches_by_player}
     {module name=chart mode=matches_by_map}
@@ -30,5 +41,6 @@
 <div style="width:34%;float:left">
     {module name=chart mode=all_players_list_elos}
 </div>
+{/if}
 </body>
 </html>
