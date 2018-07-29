@@ -101,11 +101,13 @@
         series: [
             {
                 name: 'Duel',
-                data: {$duel|json_encode:32}
+                data: {$duel|json_encode:32},
+                turboThreshold: 5000
             },
             {
                 name: '2v2',
-                data: {$tdm|json_encode:32}
+                data: {$tdm|json_encode:32},
+                turboThreshold: 5000
             }
         ],
     };
