@@ -6,8 +6,8 @@ include_once("./include/autoload.php");
 dbConnect(DB_HOST, DB_NAME, DB_USER, DB_PASS);
 settings::load();
 
-$duelUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='duel' ORDER BY last_updated, RAND() ASC LIMIT 1");
-$tdmUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='tdm' ORDER BY last_updated, RAND() ASC LIMIT 1");
+$duelUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='duel' ORDER BY last_updated, RAND() ASC LIMIT 2");
+$tdmUpdateRange = SQLSelect("SELECT * FROM leaderboard_ranges WHERE gametype='tdm' ORDER BY last_updated, RAND() ASC LIMIT 2");
 $rangesToUpdate = array_merge($duelUpdateRange, $tdmUpdateRange);
 foreach ($rangesToUpdate as $range) {
     $from = $range[range_from];
@@ -20,8 +20,10 @@ foreach ($rangesToUpdate as $range) {
     foreach ($entries as $i => $player) {
         $values[] = "(\"".mes($player['userName'])."\", $player[eloRating], ".($i + $from).", \"$range[gametype]\")";
     }
-    $sql = "INSERT INTO leaderboard (nickname, rating, idx, gametype) VALUES \n".implode(",\n", $values);
-    SQLExec($sql);
+    if (count($values)) {
+        $sql = "INSERT INTO leaderboard (nickname, rating, idx, gametype) VALUES \n".implode(",\n", $values);
+        SQLExec($sql);
+    }
     SQLExec("UPDATE leaderboard_ranges SET last_updated=CURRENT_TIMESTAMP() WHERE id=".$range['id']);
 }
 
