@@ -31,9 +31,15 @@ static function niceMapName($map_id) {
         ucwords(str_replace('_', ' ', $map_id));
 }
 
-static function playersRating($gametype) {
+static function playersRating($gametype, $startDate, $endDate) {
     static $cache = array();
-    if (isset($cache[$gametype])) return $cache[$gametype];
+    static $cacheHash = '';
+
+    $startDate = '2001-01-01';
+    $endDate = '2021-01-01';
+
+    $hash = "$startDate $endDate";
+    if (isset($cache[$gametype]) && $cacheHash == $hash) return $cache[$gametype];
 
     $ratingKeyId = SQLSelectVal("SELECT id FROM json_keys WHERE keypath='stats.playerRatings.$gametype.rating'");
     $deviationKeyId = SQLSelectVal("SELECT id FROM json_keys WHERE keypath='stats.playerRatings.$gametype.deviation'");
@@ -47,8 +53,13 @@ static function playersRating($gametype) {
         $ids[] = $player['id'];
     }
     $ids = implode(',', $ids);
-    $ratings = SQLSelect("SELECT player_id, UNIX_TIMESTAMP(time) AS x, num_value AS y FROM stats WHERE player_id IN ($ids) AND keypath_id='$ratingKeyId' ORDER BY time");
-    $deviations = SQLSelect("SELECT player_id, UNIX_TIMESTAMP(time) AS x, num_value AS y FROM stats WHERE player_id IN ($ids) AND keypath_id='$deviationKeyId' ORDER BY time");
+
+    $startDate = mes($startDate);
+    $endDate = mes($endDate);
+    $filter_date = "time BETWEEN '$startDate 00:00:00' AND '$endDate 23:59:59'";
+
+    $ratings = SQLSelect("SELECT player_id, UNIX_TIMESTAMP(time) AS x, num_value AS y FROM stats WHERE player_id IN ($ids) AND keypath_id='$ratingKeyId' AND $filter_date ORDER BY time");
+    $deviations = SQLSelect("SELECT player_id, UNIX_TIMESTAMP(time) AS x, num_value AS y FROM stats WHERE player_id IN ($ids) AND keypath_id='$deviationKeyId' AND $filter_date ORDER BY time");
 
     foreach ($ratings as $rating) {
         $players[$rating['player_id']]['ratings'][] = $rating;
@@ -82,7 +93,16 @@ static function playersRating($gametype) {
     }
 
     $cache[$gametype] = $players;
+    $cacheHash = $hash;
+
     return $players;
+}
+
+function filtersByDate(&$out) {
+    $startDate = $_REQUEST['startDate'] ?: date('Y-m-d', time() - 7*24*3600);
+    $endDate = $_REQUEST['endDate'] ?: date('Y-m-d');
+    //$out['startDate'] = $startDate;
+    //$out['endDate'] = $endDate;
 }
 
 static function chopTimeSeries($series, $from_time, $to_time, $by = 3600000) {
@@ -111,7 +131,13 @@ static function chopTimeSeries($series, $from_time, $to_time, $by = 3600000) {
 function run(){
     ++chart::$uid;
 
-    $out = array('chart_id' => $this->mode.'_'.chart::$uid);
+    if (!$this->chart_id) $this->chart_id = $this->mode.'_'.chart::$uid;
+
+    $out = array('chart_id' => $this->chart_id);
+
+    startMeasure("chart::".$this->mode);
+
+    $out['datepicker_format'] = 'YYYY-MM-DD';
 
     switch ($this->mode) {
         case 'matches_by_player':
@@ -141,6 +167,8 @@ function run(){
     }
 
     $this->data = $out;
+
+    endMeasure("chart::".$this->mode);
 }
 
 function matches_by_map(&$out) {

@@ -92,8 +92,10 @@ function out($out){
     $child = get_class($this);
     $sf = eval("return $child::\$save_fields;");
     if (!is_array($sf)) $sf = self::$save_fields;
-    foreach ($sf as $f)
+    foreach ($sf as $f) {
         $out[$f] = $this->{$f};
+    }
+    $out['ajax'] = IS_AJAX;
     
     $this->data = $out;
     
@@ -121,7 +123,6 @@ function collectParams(&$params){
     $child = get_class($this);
     $sf = eval("return $child::\$save_fields;");
     if (!is_array($sf)) $sf = self::$save_fields;
-
     foreach ($sf as $f)
         if (isset($this->{$f})) $p[$f] = $this->{$f};
     if (isset($params[$this->name])){
@@ -138,7 +139,7 @@ static function unescapeParam($s){
     return str_replace(array('%3A', '%3B', '%3D'), array(':', ';', '='), $s);
 }
 
-static function params2str($params,$prefix='_='){
+static function params2str($params, $prefix='_='){
 	if (self::$project_modules==NULL) self::getModules();
 	$str = '';
 	foreach ((array)$params as $module => $data){

@@ -2,6 +2,11 @@
 
     $out['title'] = 'Карты по популярности';
 
+    if (!IS_AJAX) {
+        $out['maps'] = array();
+        return;
+    }
+
     $query =
         "SELECT COUNT(*) AS y, o2.value AS name
             FROM other_values o1 JOIN other_values o2 JOIN

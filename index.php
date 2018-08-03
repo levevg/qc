@@ -16,7 +16,7 @@
 	define('SCRIPT_NAME', '/?');
 	
 	$module = 'front';
-	
+
 	$ajax = $_REQUEST['ajax'];
 	if ($ajax!=''){
 		if (!class_exists($ajax) && is_file(DIR_MODULES."$ajax/$ajax.class.php")) require_once DIR_MODULES."$ajax/$ajax.class.php";
@@ -30,7 +30,7 @@
 	$front = new $module();
 
 	$result = $front->execute();
-	
+
     if (!headers_sent()) {
         header ("HTTP/1.0: 200 OK\n");
         header ('Content-Type: text/html; charset='.PROJECT_CHARSET);
@@ -43,4 +43,4 @@
 
     endMeasure('TOTAL');
     
-    performanceReport();
+    if (!IS_AJAX) performanceReport();

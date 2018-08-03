@@ -1,8 +1,10 @@
 <?php
 
+    $this->filtersByDate($out);
+
     $player = [];
-    $tdm = chart::playersRating('tdm')[$this->id];
-    $duel = chart::playersRating('duel')[$this->id];
+    $tdm = chart::playersRating('tdm', $out['startDate'], $out['endDate'])[$this->id];
+    $duel = chart::playersRating('duel', $out['startDate'], $out['endDate'])[$this->id];
 
     $minTimeTdm = $tdm ? min($tdm['ratings'][0][0], $tdm['deviations'][0][0]) : 2000000000000;
     $minTimeDuel = $duel ? min($duel['ratings'][0][0], $duel['deviations'][0][0]) : 2000000000000;

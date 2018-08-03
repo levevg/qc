@@ -20,6 +20,7 @@ Highcharts.theme = {
         plotBorderColor: '#606063'
     },
     title: {
+        align: 'left',
         style: {
             color: '#E0E0E3',
             fontSize: '18px'
@@ -44,6 +45,11 @@ Highcharts.theme = {
             style: {
                 color: '#A0A0A3'
             }
+        }
+    },
+    loading: {
+        style: {
+            backgroundColor: '#000000',
         }
     },
     yAxis: {
@@ -235,3 +241,20 @@ const ratingPlotLines = [
     { color: 'rgba(255, 255, 255, 0.1)', width: 1, value: 2125, dashStyle: 'ShortDot' },
     { color: 'rgba(255, 255, 255, 0.1)', width: 1, value: 2200, dashStyle: 'ShortDot' },
 ];
+
+function eloDistributionTooltipFormatter() {
+    if (this.x=='Elite') return 'Группа <b>{$elite}+' +
+        '</b><br/>Дуэли: <b>' + this.points[0].y + '</b> игроков<br/>2v2: <b>' + this.points[1].y + '</b> игроков';
+    if (!parseInt(this.x)) return 'Инфа доступна только<br/>по топ-5000';
+    return 'Группа <b>' + this.x + '-' + (this.x+74) +
+        '</b><br/>Дуэли: <b>' + this.points[0].y + '</b> игроков<br/>2v2: <b>' + this.points[1].y + '</b> игроков';
+}
+
+function reloadChart(chartId, chartObject, link) {
+    chartObject.showLoading();
+    $.get(link, function(data) {
+        eval.call(window, data);
+        chartObject.update(window[chartId + '_data'], true, true);
+        chartObject.hideLoading();
+    });
+}

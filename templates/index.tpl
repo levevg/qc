@@ -10,11 +10,15 @@
     <link rel="mask-icon" href="/img/safari-pinned-tab.svg" color="#5bbad5"/>
     <link rel="shortcut icon" href="/img/favicon.ico"/>
     <link href="/combine.php?files=css%2Fstyle.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://code.highcharts.com/highcharts.src.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
     <script src="https://code.highcharts.com/modules/heatmap.js"></script>
-    <script type="text/javascript" src="/combine.php?files=js%2Fjquery.js,js%2Fscripts.js"></script>
+    <script type="text/javascript" src="/combine.php?files=js%2Fscripts.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122950678-1"></script>
     <script>
@@ -26,7 +30,9 @@
 </head>
 <body>
 {if $action == "elo"}
+<div style="width: 100%; height: 100%; display: flex; align-items: center;">
     {module name=chart mode=elo_old_vs_new}
+</div>
 {else}
 <div style="width:33%;float:left">
     {module name=chart mode=matches_by_player}

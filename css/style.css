@@ -9,7 +9,8 @@ body {
     padding: 2px 2px;
     height: 100%;
     color: #EEE;
-    font: 13px/17px Verdana;
+    font-size: 13px;
+    font-family: 'Roboto Condensed', 'sans-serif';
     background-color: #000;
 }
 
@@ -59,4 +60,36 @@ div.text { text-align: justify; }
     width: auto;
     height: 400px;
     padding: 2px 2px;
+}
+
+.chart.elo_old_vs_new {
+    width: 700px;
+    height: 710px;
+    margin: 0 auto;
+}
+
+.chart_toolbar_container {
+    position: relative;
+    height: 0;
+}
+
+.chart_toolbar {
+    width: 100%;
+    position: absolute;
+    z-index:1;
+    right: 10px;
+    top: 0;
+    height: 30px;
+    text-align: right;
+    color: #CCC;
+}
+
+.chart_toolbar input.date {
+    color: #FFF;
+    background-color: #222;
+    height: 18px;
+    border: 1px solid #333;
+    margin-top: 8px;
+    padding: 2px 5px 2px 5px;
+    font-family: 'Roboto Condensed', 'sans-serif';
 }
