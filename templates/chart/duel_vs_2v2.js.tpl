@@ -11,7 +11,7 @@
                     .add();
                 this.renderer.text('2v2 = duel', 270, 515)
                     .css({
-                        color: 'rgba(100,100,100,0.7)',
+                        color: 'rgba(120,120,120,0.7)',
                         fontSize: '11px',
                         transform: 'rotate(-45deg)',
                     }).add();
