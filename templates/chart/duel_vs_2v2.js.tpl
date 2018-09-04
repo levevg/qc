@@ -7,7 +7,7 @@
 
                 this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(min),
                                     'L', this.xAxis[0].toPixels(max), this.yAxis[0].toPixels(max)])
-                    .attr({ 'stroke-width': 1, 'stroke': 'rgba(60,60,60,0.15)' })
+                    .attr({ 'stroke-width': 1, 'stroke': 'rgba(60,60,60,0.5)' })
                     .add();
 
                 var a = min*{$elo_slope} + {$elo_offset},
@@ -20,7 +20,7 @@
 
                 var angle = Math.atan(-{$elo_slope}), x = this.xAxis[0].toPixels(max), y = this.yAxis[0].toPixels({$elo_slope}*max + {$elo_offset}),
                     nx = Math.cos(-angle)*x - Math.sin(-angle)*y - 50, ny = Math.sin(-angle)*x + Math.cos(-angle)*y+15;
-                this.renderer.text('new = ' + (Math.round({$elo_slope}*100)/100) + ' * old + ' + Math.round({$elo_offset}), nx, ny)
+                this.renderer.text('2v2 = ' + (Math.round({$elo_slope}*100)/100) + ' * duel + ' + Math.round({$elo_offset}), nx, ny)
                     .css({
                         color: 'rgba(0,179,176,0.4)',
                         fontSize: '11px',

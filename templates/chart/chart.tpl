@@ -63,7 +63,7 @@
         {/if}
 
         {if $mode == "duel_vs_2v2"}
-            let eonSize = 600, eonMinElo = 600, eonMaxElo = 3000;
+            let eonSize = 600, eonMinElo = 1200, eonMaxElo = 2800;
             var {$chart_id}_data = {inc file="duel_vs_2v2.js.tpl"};
         {/if}
 
