@@ -76,13 +76,7 @@
             }
         }
     },
-    legend: {
-        align: 'right',
-        verticalAlign: 'top',
-        x: -40, y: 25,
-        floating: true,
-        backgroundColor: '#444',
-    },
+    legend: { enabled: false },
     series: [
         {
             name: 'Duel vs 2v2',
