@@ -161,6 +161,9 @@ function run(){
         case 'elo_old_vs_new':
             $this->elo_old_vs_new($out);
             break;
+        case 'duel_vs_2v2':
+            $this->duel_vs_2v2($out);
+            break;
         case 'all_players_list_elos':
             $out['players'] = SQLSelect("SELECT * FROM players WHERE show_stats LIKE '%rating%'");
             break;
@@ -197,6 +200,10 @@ function players_matches(&$out) {
 
 function elo_old_vs_new(&$out) {
     require 'elo_old_vs_new.inc.php';
+}
+
+function duel_vs_2v2(&$out) {
+    require 'duel_vs_2v2.inc.php';
 }
 
 }

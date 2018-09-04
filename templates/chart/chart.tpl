@@ -62,6 +62,11 @@
             var {$chart_id}_data = {inc file="elo_old_vs_new.js.tpl"};
         {/if}
 
+        {if $mode == "duel_vs_2v2"}
+            let eonSize = 600, eonMinElo = 600, eonMaxElo = 3000;
+            var {$chart_id}_data = {inc file="duel_vs_2v2.js.tpl"};
+        {/if}
+
         {if $mode == "players_matches"}
             var {$chart_id}_data = {inc file="players_matches.js.tpl"};
         {/if}

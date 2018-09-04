@@ -33,6 +33,10 @@
 <div style="width: 100%; height: 100%; display: flex; align-items: center;">
     {module name=chart mode=elo_old_vs_new}
 </div>
+{elseif $action == "duel_vs_2v2"}
+    <div style="width: 100%; height: 100%; display: flex; align-items: center;">
+        {module name=chart mode=duel_vs_2v2}
+    </div>
 {else}
 <div style="width:33%;float:left">
     {module name=chart mode=matches_by_player}
