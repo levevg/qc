@@ -9,11 +9,11 @@
                                     'L', this.xAxis[0].toPixels(max), this.yAxis[0].toPixels(max)])
                     .attr({ 'stroke-width': 1, 'stroke': 'rgba(100,100,100,0.5)' })
                     .add();
-                this.renderer.text('2v2 = duel', 270, 500)
+                this.renderer.text('2v2 = duel', 270, 515)
                     .css({
-                        color: 'rgba(100,100,100,0.5)',
+                        color: 'rgba(100,100,100,0.7)',
                         fontSize: '11px',
-                        transform: 'rotate(45deg)',
+                        transform: 'rotate(-45deg)',
                     }).add();
 
                 var a = min*{$elo_slope} + {$elo_offset},
