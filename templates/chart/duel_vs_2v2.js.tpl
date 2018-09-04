@@ -2,7 +2,7 @@
     chart: {
         type: 'scatter',
         events: {
-            load: function () {/*
+            load: function () {
                 let min = eonMinElo+50, max = eonMaxElo-200;
 
                 this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(min),
@@ -10,40 +10,22 @@
                     .attr({ 'stroke-width': 1, 'stroke': 'rgba(60,60,60,0.15)' })
                     .add();
 
-                var a = min*{$duel_slope} + {$duel_offset},
-                    b = max*{$duel_slope} + {$duel_offset};
+                var a = min*{$elo_slope} + {$elo_offset},
+                    b = max*{$elo_slope} + {$elo_offset};
 
                 this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(a),
                                     'L', this.xAxis[0].toPixels(max), this.yAxis[0].toPixels(b)])
                     .attr({ 'stroke-width': 1, 'stroke': 'rgba(0,179,176,0.2)' })
                     .add();
 
-                var c = min*{$tdm_slope} + {$tdm_offset},
-                    d = max*{$tdm_slope} + {$tdm_offset};
-
-                this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(c),
-                    'L', this.xAxis[0].toPixels(max), this.yAxis[0].toPixels(d)])
-                    .attr({ 'stroke-width': 1, 'stroke': 'rgba(255,236,135,0.2)' })
-                    .add();
-
-                var angle = Math.atan(-{$duel_slope}), x = this.xAxis[0].toPixels(max), y = this.yAxis[0].toPixels({$duel_slope}*max + {$duel_offset}),
+                var angle = Math.atan(-{$elo_slope}), x = this.xAxis[0].toPixels(max), y = this.yAxis[0].toPixels({$elo_slope}*max + {$elo_offset}),
                     nx = Math.cos(-angle)*x - Math.sin(-angle)*y - 50, ny = Math.sin(-angle)*x + Math.cos(-angle)*y+15;
-                this.renderer.text('new = ' + (Math.round({$duel_slope}*100)/100) + ' * old + ' + Math.round({$duel_offset}), nx, ny)
+                this.renderer.text('new = ' + (Math.round({$elo_slope}*100)/100) + ' * old + ' + Math.round({$elo_offset}), nx, ny)
                     .css({
                         color: 'rgba(0,179,176,0.4)',
                         fontSize: '11px',
                         transform: 'rotate(' + Math.round(angle*180/Math.PI) + 'deg)',
                     }).add();
-
-                var angle = Math.atan(-{$tdm_slope}), x = this.xAxis[0].toPixels(max), y = this.yAxis[0].toPixels({$tdm_slope}*max + {$tdm_offset}),
-                    nx = Math.cos(-angle)*x - Math.sin(-angle)*y - 50, ny = Math.sin(-angle)*x + Math.cos(-angle)*y-10;
-                this.renderer.text('new = ' + (Math.round({$tdm_slope}*100)/100) + ' * old + ' + Math.round({$tdm_offset}), nx, ny)
-                    .css({
-                        color: 'rgba(255,236,135,0.4)',
-                        fontSize: '11px',
-                        transform: 'rotate(' + Math.round(angle*180/Math.PI) + 'deg)',
-                    }).add();
-                */
             }
         }
     },
