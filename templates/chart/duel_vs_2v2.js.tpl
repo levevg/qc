@@ -7,8 +7,14 @@
 
                 this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(min),
                                     'L', this.xAxis[0].toPixels(max), this.yAxis[0].toPixels(max)])
-                    .attr({ 'stroke-width': 1, 'stroke': 'rgba(60,60,60,0.5)' })
+                    .attr({ 'stroke-width': 1, 'stroke': 'rgba(100,100,100,0.5)' })
                     .add();
+                this.renderer.text('2v2 = duel', 270, 500)
+                    .css({
+                        color: 'rgba(0,179,176,0.4)',
+                        fontSize: '11px',
+                        transform: 'rotate(45deg)',
+                    }).add();
 
                 var a = min*{$elo_slope} + {$elo_offset},
                     b = max*{$elo_slope} + {$elo_offset};
