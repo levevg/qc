@@ -16,11 +16,7 @@
         return [$b/$det, $k/$det];
     }
 
-    $duel = SQLSelect("SELECT old.rating AS `x`, new.rating AS `y`, new.nickname AS name FROM leaderboard new JOIN leaderboard_before_reset old ON (new.nickname = old.nickname AND new.gametype = old.gametype) WHERE new.gametype = 'duel'");
-    $tdm = SQLSelect("SELECT old.rating AS `x`, new.rating AS `y`, new.nickname AS name FROM leaderboard new JOIN leaderboard_before_reset old ON (new.nickname = old.nickname AND new.gametype = old.gametype) WHERE new.gametype = 'tdm'");;
+    $elo = SQLSelect("SELECT duel.rating AS `x`, tvt.rating AS `y`, new.nickname AS name FROM leaderboard duel JOIN leaderboard tvt ON (duel.nickname = tvt.nickname AND duel.gametype = \"duel\" AND tvt.gametype=\"tdm\")");
 
-    $out['duel'] = $duel;
-    list($out['duel_slope'], $out['duel_offset']) = regression($duel);
-
-    $out['tdm'] = $tdm;
-    list($out['tdm_slope'], $out['tdm_offset']) = regression($tdm);
+    $out['elo'] = $elo;
+    list($out['elo_slope'], $out['elo_offset']) = regression($elo);

@@ -62,7 +62,7 @@ div.text { text-align: justify; }
     padding: 2px 2px;
 }
 
-.chart.elo_old_vs_new {
+.chart.elo_old_vs_new, .chart.duel_vs_2v2 {
     width: 700px;
     height: 710px;
     margin: 0 auto;

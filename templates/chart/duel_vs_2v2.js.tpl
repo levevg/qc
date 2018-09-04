@@ -2,7 +2,7 @@
     chart: {
         type: 'scatter',
         events: {
-            load: function () {
+            load: function () {/*
                 let min = eonMinElo+50, max = eonMaxElo-200;
 
                 this.renderer.path(['M', this.xAxis[0].toPixels(min), this.yAxis[0].toPixels(min),
@@ -43,13 +43,14 @@
                         fontSize: '11px',
                         transform: 'rotate(' + Math.round(angle*180/Math.PI) + 'deg)',
                     }).add();
+                */
             }
         }
     },
-    title: { text: 'Duel rating vs 2v2 rating' },
-    subtitle: { text: 'Based on ' + {$duel|count} + ' duel and ' + {$tdm|count} + ' tdm (2v2) players' },
+    title: { text: 'Duel vs 2v2 ratings' },
+    subtitle: { text: 'Based on ' + {$elo|count} + ' players' },
     xAxis: {
-        title: { text: 'Before reset' },
+        title: { text: 'Duel rating' },
         startOnTick: true,
         endOnTick: true,
         showLastLabel: true,
@@ -64,7 +65,7 @@
         lineColor: 'rgba(120,120,120,0.15)',
     },
     yAxis: {
-        title: { text: 'After reset' },
+        title: { text: '2v2 rating' },
         min: eonMinElo,
         max: eonMaxElo,
         width: eonSize,
@@ -83,7 +84,7 @@
             marker: { radius: 1, },
             tooltip: {
                 headerFormat: '<span style="font-size:150%; font-weight: bold">{ldelim}point.key}</span> - <i>{ldelim}series.name}</i><br/>.<br/>',
-                pointFormat: 'Old: {ldelim}point.x}<br/>New: {ldelim}point.y}'
+                pointFormat: 'Duel: {ldelim}point.x}<br/>2v2: {ldelim}point.y}'
             }
         }
     },
@@ -96,13 +97,8 @@
     },
     series: [
         {
-            name: 'Duel',
-            data: {$duel|json_encode:32},
-            turboThreshold: 5000
-        },
-        {
-            name: '2v2',
-            data: {$tdm|json_encode:32},
+            name: 'Duel vs 2v2',
+            data: {$elo|json_encode:32},
             turboThreshold: 5000
         }
     ],
