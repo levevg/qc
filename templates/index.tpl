@@ -40,7 +40,7 @@
 {else}
 <div style="width:33%;float:left">
     {module name=chart mode=matches_by_player}
-    {module name=chart mode=matches_by_map}
+    <!--{ module name=chart mode=matches_by_map}-->
     {module name=chart mode=elo_distribution}
 </div>
 <div style="width:33%;float:left">

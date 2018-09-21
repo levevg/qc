@@ -1,5 +1,5 @@
 <?php
-
+exit;
     include_once("./config.php");
     include_once("./include/errors.php");
     include_once("./include/autoload.php");
