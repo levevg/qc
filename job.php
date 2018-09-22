@@ -1,5 +1,5 @@
 <?php
-exit;
+
     include_once("./config.php");
     include_once("./include/errors.php");
     include_once("./include/autoload.php");
@@ -193,8 +193,8 @@ exit;
         saveNewOtherValues();
         if (count($newRows)) SQLExec($sql);
         SQLExec("UPDATE players SET last_updated=CURRENT_TIMESTAMP() WHERE id=$player[id]");
+        SQLExec("UPDATE stats SET time=CURRENT_TIMESTAMP() WHERE revision='$revision' AND time IS NULL");
     }
-    SQLExec("UPDATE stats SET time=CURRENT_TIMESTAMP() WHERE revision='$revision'");
 
     echo "Updating matches history\n";
     SQLExec("DROP VIEW IF EXISTS keypaths");
